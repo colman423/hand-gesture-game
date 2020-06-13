@@ -11,10 +11,6 @@ public class ManomotionUIManagment : MonoBehaviour
 
     private void Awake()
     {
-        if (!licenseInfoGizmo)
-        {
-            licenseInfoGizmo = transform.Find("LicenseInfoGizmo").gameObject;
-        }
         ManomotionManager.OnManoMotionFrameProcessed += DisplayInformationAfterManoMotionProcessFrame;
         ManomotionManager.OnManoMotionLicenseInitialized += HandleManoMotionManagerInitialized;
     }

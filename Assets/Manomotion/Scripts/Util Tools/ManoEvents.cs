@@ -106,7 +106,7 @@ public class ManoEvents : MonoBehaviour
 	/// Displays Log messages from the Manomotion Flags 
 	/// </summary>
 	/// <param name="message">Requires the string message to be displayed</param>
-	void DisplayLogMessage(string message)
+	public void DisplayLogMessage(string message)
 	{
 		if (!statusAnimator)
 		{

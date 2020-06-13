@@ -96,6 +96,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -552,6 +553,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -660,6 +662,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: ManomotionManager
       objectReference: {fileID: 0}
+    - target: {fileID: 114227743657279858, guid: 3b19460acec7fad4baeab3db2a8268e1,
+        type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 1029591249}
+    - target: {fileID: 114251843207838166, guid: 3b19460acec7fad4baeab3db2a8268e1,
+        type: 3}
+      propertyPath: _licenseKey
+      value: JOTJJ-CUMZP-FAMWT-BFRPU
+      objectReference: {fileID: 0}
+    - target: {fileID: 114656061702543436, guid: 3b19460acec7fad4baeab3db2a8268e1,
+        type: 3}
+      propertyPath: debugLogAnimator
+      value: 
+      objectReference: {fileID: 508542673}
+    - target: {fileID: 114656061702543436, guid: 3b19460acec7fad4baeab3db2a8268e1,
+        type: 3}
+      propertyPath: statusAnimator
+      value: 
+      objectReference: {fileID: 508542673}
     - target: {fileID: 224177848247263556, guid: 3b19460acec7fad4baeab3db2a8268e1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -764,26 +786,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114227743657279858, guid: 3b19460acec7fad4baeab3db2a8268e1,
-        type: 3}
-      propertyPath: cam
-      value: 
-      objectReference: {fileID: 1029591249}
-    - target: {fileID: 114656061702543436, guid: 3b19460acec7fad4baeab3db2a8268e1,
-        type: 3}
-      propertyPath: debugLogAnimator
-      value: 
-      objectReference: {fileID: 508542673}
-    - target: {fileID: 114656061702543436, guid: 3b19460acec7fad4baeab3db2a8268e1,
-        type: 3}
-      propertyPath: statusAnimator
-      value: 
-      objectReference: {fileID: 508542673}
-    - target: {fileID: 114251843207838166, guid: 3b19460acec7fad4baeab3db2a8268e1,
-        type: 3}
-      propertyPath: _licenseKey
-      value: LMCIG-BGUKT-ZGRED-AJDIO
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b19460acec7fad4baeab3db2a8268e1, type: 3}
@@ -1071,8 +1073,9 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1297016242}
   m_Enabled: 1
-  serializedVersion: 9
+  serializedVersion: 10
   m_Type: 1
+  m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
   m_Range: 10
