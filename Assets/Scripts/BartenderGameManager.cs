@@ -105,7 +105,7 @@ public class BartenderGameManager : MonoBehaviour
         showMsg("releaseCurrentBeer");
         int nearestLaneIdx = -1;
         Vector3 currentBeerPos = currentBeer.transform.localPosition;
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < laneList.Length; i++)
         {
             if (Mathf.Abs(laneList[i].transform.localPosition.y - currentBeerPos.y) < 80)
             {
@@ -117,7 +117,7 @@ public class BartenderGameManager : MonoBehaviour
 
         if (nearestLaneIdx != -1)
         {
-            currentBeer.transform.position = getLaneStartPosition(laneList[nearestLaneIdx]);
+            currentBeer.transform.localPosition = getLaneStartPosition(laneList[nearestLaneIdx]);
             currentBeer.GetComponent<BeerInstance>().setSliding(true);
             currentBeer = null;
         }
@@ -144,22 +144,20 @@ public class BartenderGameManager : MonoBehaviour
         Debug.Log(laneList[0].transform.localPosition);
         Debug.Log(laneList[1].transform.localPosition);
         Debug.Log(laneList[2].transform.localPosition);
-        Debug.Log(laneList[3].transform.localPosition);
         if (Input.GetKey(KeyCode.Q))
         {
-            GrabNewBeer(getLaneStartPosition(laneList[0]));
+            GameObject beer = GrabNewBeer(getLaneStartPosition(laneList[0]));
+            beer.GetComponent<BeerInstance>().setSliding(true);
         }
         else if (Input.GetKey(KeyCode.W))
         {
-            GrabNewBeer(getLaneStartPosition(laneList[1]));
+            GameObject beer = GrabNewBeer(getLaneStartPosition(laneList[1]));
+            beer.GetComponent<BeerInstance>().setSliding(true);
         }
         else if (Input.GetKey(KeyCode.E))
         {
-            GrabNewBeer(getLaneStartPosition(laneList[2]));
-        }
-        else if (Input.GetKey(KeyCode.R))
-        {
-            GrabNewBeer(getLaneStartPosition(laneList[3]));
+            GameObject beer = GrabNewBeer(getLaneStartPosition(laneList[2]));
+            beer.GetComponent<BeerInstance>().setSliding(true);
         }
     }
 
