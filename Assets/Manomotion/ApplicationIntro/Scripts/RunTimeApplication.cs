@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using ManoMotion.UI.Buttons;
-using ManoMotion.HowToUse;
 
 namespace ManoMotion.RunTime
 {

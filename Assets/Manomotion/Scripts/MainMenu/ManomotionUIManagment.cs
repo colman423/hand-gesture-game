@@ -24,8 +24,8 @@ public class ManomotionUIManagment : MonoBehaviour
     /// </summary>
     void DisplayInformationAfterManoMotionProcessFrame()
     {
-        // UpdateFPSText();
-        // UpdateProcessingTime();
+        UpdateFPSText();
+        UpdateProcessingTime();
     }
 
     /// <summary>
@@ -84,20 +84,20 @@ public class ManomotionUIManagment : MonoBehaviour
 
     public void HandleManoMotionManagerInitialized()
     {
-        versionText.text = "Version ";
-        float versionFull = ManomotionManager.Instance.ManoLicense.version;
-        string prefix = "Version ";
+        // versionText.text = "Version ";
+        // float versionFull = ManomotionManager.Instance.ManoLicense.version;
+        // string prefix = "Version ";
 
-        string versionString = versionFull.ToString();
+        // string versionString = versionFull.ToString();
 
-        if (versionString.Length > 3)
-        {
-            versionString = versionString.Insert(versionString.Length - 1, ".");
-        }
+        // if (versionString.Length > 3)
+        // {
+        //     versionString = versionString.Insert(versionString.Length - 1, ".");
+        // }
 
-        int versionLength = versionFull.ToString().Length;
+        // int versionLength = versionFull.ToString().Length;
 
-        versionText.text = prefix += versionString;
+        // versionText.text = prefix += versionString;
     }
 
     private void OnEnable()
