@@ -386,6 +386,7 @@ namespace ManoMotion.RunTime
         /// </summary>
         public void StartMainApplicationWithDefaultSettings()
         {
+            Debug.Log("StartMainApplicationWithDefaultSettings");
             //Go through the list instead to see what should be on and what should be off
             menuToggleButtonObject.SetActive(true);
             menuToggleButtonObject.transform.GetChild(0).GetComponent<MenuButton>().CloseMenuAndShowManoMotionCanvas();

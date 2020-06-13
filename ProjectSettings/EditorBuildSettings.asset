@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/GomokuWithOnlyChess.unity
+    guid: 14bff7f8c475b3445858f2aa3eb79abe
   m_configObjects: {}

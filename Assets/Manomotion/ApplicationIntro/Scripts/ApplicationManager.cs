@@ -52,6 +52,7 @@ public class ApplicationManager : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("Start StartMainApplicationWithDefaultSettings");
         runTimeApplication.StartMainApplicationWithDefaultSettings();
     }
 
