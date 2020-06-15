@@ -142,7 +142,7 @@ public class BartenderGameManager : MonoBehaviour
 
     void DEV_CreateBeerFromKeyboard()
     {
-
+#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             currentBeer = GrabNewBeer(Input.mousePosition);
@@ -172,6 +172,8 @@ public class BartenderGameManager : MonoBehaviour
             beer.GetComponent<BeerInstance>().setSliding(true);
             beer.GetComponent<BeerInstance>().onSlideOutMapAction += onBeerSlideOutMap;
         }
+#endif
+
     }
 
 
