@@ -13,8 +13,8 @@ public class BartenderGameManager : MonoBehaviour
 
     public GameObject beerPrefab;
     public GameObject currentBeer;
-    public GameObject[] beerList;
-    public GameObject[] customerList;
+    // public GameObject[] beerList;
+    // public GameObject[] customerList;
 
 
     public GameObject gameCanvas;
@@ -142,6 +142,18 @@ public class BartenderGameManager : MonoBehaviour
 
     void DEV_CreateBeerFromKeyboard()
     {
+
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            currentBeer = GrabNewBeer(Input.mousePosition);
+        }
+        else if (Input.GetKeyUp(KeyCode.Mouse0))
+        {
+            releaseCurrentBeer();
+        }
+        updateCurrentBeerPosition(Input.mousePosition);
+
+
         if (Input.GetKeyDown(KeyCode.Q))
         {
             GameObject beer = GrabNewBeer(LaneUtils.Instance.getLaneStartPosition(0));

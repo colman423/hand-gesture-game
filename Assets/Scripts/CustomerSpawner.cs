@@ -24,6 +24,7 @@ public class CustomerSpawner : MonoBehaviour
             if (rand < (i + 1) * customerSpawnFreq / 3)
             {
                 spawn(i);
+                return;
             }
         }
     }
