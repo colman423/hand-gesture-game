@@ -4,59 +4,45 @@ using UnityEngine;
 using UnityEngine.UI;
 public class BartenderGameManager : MonoBehaviour
 {
-    // [SerializeField]
-    // float fadeSpeed = 5;
+    public static BartenderGameManager Instance;
+    private void Awake()
+    {
+        if (!Instance) Instance = this;
+    }
 
-    // Image spookeyImageHolder;
-
-    // RectTransform spookyRectTransform;
-
-    // [SerializeField]
-    // Sprite openHandSprite;
-    // [SerializeField]
-    // Sprite closedHandSprite;
 
     public GameObject beerPrefab;
     public GameObject currentBeer;
     public GameObject[] beerList;
-    public GameObject[] laneList;
     public GameObject[] customerList;
-
-    // public 
 
 
     public GameObject gameCanvas;
 
     public ManoEvents manoEvents;
 
-    public int laneStartPosition;
+
+    public int score = 0;
+    public Text scoreText;
 
     // Use this for initialization
     void Start()
     {
         ManomotionManager.OnManoMotionFrameProcessed += HandleManoMotionFrameUpdated;
-
-
+        updateScore(0);
     }
 
     private void Update()
     {
-        // randomSpawn
+        CustomerSpawner.Instance.onFrameUpdate();
 
         DEV_CreateBeerFromKeyboard();
     }
-
-
     void HandleManoMotionFrameUpdated()
     {
         GestureInfo gesture = ManomotionManager.Instance.Hand_infos[0].hand_info.gesture_info;
         TrackingInfo tracking = ManomotionManager.Instance.Hand_infos[0].hand_info.tracking_info;
         Warning warning = ManomotionManager.Instance.Hand_infos[0].hand_info.warning;
-
-        // AssignSpookeyFace(gesture, warning);
-        // MoveAndScaleSpookey(tracking, warning);
-        // HighlightSpookeyImage(warning);
-
 
         if (warning != Warning.WARNING_HAND_NOT_FOUND)
         {
@@ -77,17 +63,18 @@ public class BartenderGameManager : MonoBehaviour
             {
                 updateCurrentBeerPosition(ManoUtils.Instance.CalculateScreenPosition(tracking.poi, tracking.depth_estimation));
             }
-
         }
     }
+
+
 
     // try to grab new beer from fingers, need to grab in the area
     GameObject GrabNewBeer(Vector3 initPosition)
     {
         showMsg("GrabNewBeer");
-        GameObject chess = Instantiate(beerPrefab, initPosition, Quaternion.identity);
-        chess.transform.SetParent(gameCanvas.transform, false);
-        return chess;
+        GameObject beer = Instantiate(beerPrefab, initPosition, Quaternion.identity);
+        beer.transform.SetParent(gameCanvas.transform, false);
+        return beer;
     }
 
     // update current beer position by finger position
@@ -102,23 +89,15 @@ public class BartenderGameManager : MonoBehaviour
     // when finger do drop gesture, release current beer
     void releaseCurrentBeer()
     {
-        showMsg("releaseCurrentBeer");
-        int nearestLaneIdx = -1;
         Vector3 currentBeerPos = currentBeer.transform.localPosition;
-        for (int i = 0; i < laneList.Length; i++)
-        {
-            if (Mathf.Abs(laneList[i].transform.localPosition.y - currentBeerPos.y) < 80)
-            {
-                nearestLaneIdx = i;
-                break;
-            }
-        }
+        int nearestLaneIdx = LaneUtils.Instance.getNearestLaneIndex(currentBeerPos);
         showMsg("releaseCurrentBeer " + nearestLaneIdx);
 
         if (nearestLaneIdx != -1)
         {
-            currentBeer.transform.localPosition = getLaneStartPosition(laneList[nearestLaneIdx]);
+            currentBeer.transform.localPosition = LaneUtils.Instance.getLaneStartPosition(nearestLaneIdx);
             currentBeer.GetComponent<BeerInstance>().setSliding(true);
+            currentBeer.GetComponent<BeerInstance>().onSlideOutMapAction += onBeerSlideOutMap;
             currentBeer = null;
         }
         else
@@ -127,13 +106,35 @@ public class BartenderGameManager : MonoBehaviour
         }
     }
 
-    Vector3 getLaneStartPosition(GameObject lane)
+
+    public void onBeerSlideOutMap()
     {
-        Vector3 lanePosition = lane.transform.localPosition;
-        return new Vector3(laneStartPosition, lanePosition.y, 0);
+        Debug.Log("onBeerSlideOutMap");
+        updateScore(-20);
+    }
+
+    public void onCustomerTouchBeer(GameObject beer)
+    {
+        Debug.Log("onCustomerTouchBeer");
+        updateScore(10);
+        beer.GetComponent<BeerInstance>().onTouchCustomer();
     }
 
 
+    public void onCustomerTouchFrontWall()
+    {
+        Debug.Log("onCustomerTouchFrontWall");
+        updateScore(-20);
+    }
+
+    void updateScore(int addScore)
+    {
+        score += addScore;
+        scoreText.text = "Score: " + score;
+        Debug.Log("updateScore");
+        Debug.Log(score);
+        Debug.Log(scoreText.text);
+    }
     void showMsg(string msg)
     {
         manoEvents.DisplayLogMessage(msg);
@@ -141,23 +142,23 @@ public class BartenderGameManager : MonoBehaviour
 
     void DEV_CreateBeerFromKeyboard()
     {
-        Debug.Log(laneList[0].transform.localPosition);
-        Debug.Log(laneList[1].transform.localPosition);
-        Debug.Log(laneList[2].transform.localPosition);
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
-            GameObject beer = GrabNewBeer(getLaneStartPosition(laneList[0]));
+            GameObject beer = GrabNewBeer(LaneUtils.Instance.getLaneStartPosition(0));
             beer.GetComponent<BeerInstance>().setSliding(true);
+            beer.GetComponent<BeerInstance>().onSlideOutMapAction += onBeerSlideOutMap;
         }
-        else if (Input.GetKey(KeyCode.W))
+        else if (Input.GetKeyDown(KeyCode.W))
         {
-            GameObject beer = GrabNewBeer(getLaneStartPosition(laneList[1]));
+            GameObject beer = GrabNewBeer(LaneUtils.Instance.getLaneStartPosition(1));
             beer.GetComponent<BeerInstance>().setSliding(true);
+            beer.GetComponent<BeerInstance>().onSlideOutMapAction += onBeerSlideOutMap;
         }
-        else if (Input.GetKey(KeyCode.E))
+        else if (Input.GetKeyDown(KeyCode.E))
         {
-            GameObject beer = GrabNewBeer(getLaneStartPosition(laneList[2]));
+            GameObject beer = GrabNewBeer(LaneUtils.Instance.getLaneStartPosition(2));
             beer.GetComponent<BeerInstance>().setSliding(true);
+            beer.GetComponent<BeerInstance>().onSlideOutMapAction += onBeerSlideOutMap;
         }
     }
 
