@@ -43,7 +43,6 @@ public class BartenderGameManager : MonoBehaviour
         GestureInfo gesture = ManomotionManager.Instance.Hand_infos[0].hand_info.gesture_info;
         TrackingInfo tracking = ManomotionManager.Instance.Hand_infos[0].hand_info.tracking_info;
         Warning warning = ManomotionManager.Instance.Hand_infos[0].hand_info.warning;
-
         if (warning != Warning.WARNING_HAND_NOT_FOUND)
         {
             ManoGestureTrigger triggerGesture = gesture.mano_gesture_trigger;
@@ -63,6 +62,11 @@ public class BartenderGameManager : MonoBehaviour
             {
                 updateCurrentBeerPosition(ManoUtils.Instance.CalculateScreenPosition(tracking.poi, tracking.depth_estimation));
             }
+        }
+        else {
+            showMsg("No hand detected");
+            GameObject.Destroy(currentBeer);
+            currentBeer = null;
         }
     }
 
@@ -103,6 +107,7 @@ public class BartenderGameManager : MonoBehaviour
         else
         {
             GameObject.Destroy(currentBeer);
+            currentBeer = null;
         }
     }
 
